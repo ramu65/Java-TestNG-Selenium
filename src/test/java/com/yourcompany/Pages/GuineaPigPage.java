@@ -46,6 +46,10 @@ public class GuineaPigPage {
     public void submitComment(String text) {
         commentsTextAreaInput.sendKeys(text);
         submitButton.click();
+
+        // Race condition for time to populate yourCommentsSpan
+        WebDriverWait wait = new WebDriverWait(driver, 15);
+        wait.until(ExpectedConditions.textToBePresentInElement(yourCommentsSpan, text));
     }
 
     public String getSubmittedCommentText() {
